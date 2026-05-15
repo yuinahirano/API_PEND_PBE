@@ -20,6 +20,42 @@ const produtosController = {
             });
         }
     },
+selecionar: async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        let result;
+
+        if (id) {
+            result = await produtoRepository.selecionarPorId(id);
+        } else {
+            result = await produtoRepository.selecionarTodos();
+        }
+
+        return res.status(200).json({ result });
+
+    } catch (error) {
+        console.log(error);
+
+        res.status(500).json({
+            message: 'Ocorreu um erro no servidor',
+            errorMessage: error.message
+        });
+    }
+},
+    selecionarEstoque: async (req, res) => {
+        try {
+            const id = req.params.id;
+            const result = await produtoRepository.selecionarEstoque(id);
+            return res.status(200).json({ result });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                message: 'Ocorreu um erro no servidor',
+                errorMessage: error.message
+            });
+        }
+    },
 }
 
 export default produtosController;
