@@ -18,6 +18,11 @@ const categoriaRepository = {
         const[rows] = await connection.execute(sql, values);
         return rows;
     },
+    buscarPorId: async () => {
+        const sql = 'SELECT * FROM categorias WHERE id = ?;';
+        const [rows] = await connection.execute(sql, [id]);
+        return rows[0];
+    },
     selecionar: async()=>{
         const sql= 'SELECT * FROM categorias;';
         const[rows] = await connection.execute(sql);
