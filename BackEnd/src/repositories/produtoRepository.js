@@ -50,27 +50,38 @@ selecionarPorId: async (idProduto) => {
         return rows[0];
     },
 
-    editar: async (produto) => {
-        const sql = `
-            UPDATE produtos
-            SET Nome = ?, preco = ?, vinculoImagem = ?, idCategoria = ?, qtdEstoque = ?
-            WHERE id = ?;
-        `;
-        const values = [
-            produto.nome,
-            produto.preco,
-            produto.vinculoImg,
-            produto.idCategoria,
-            produto.qtdEstoque,
-            produto.id
-        ];
+editar: async (produto) => {
+    console.log(produto.id);
 
-        const [rows] = await connection.execute(sql, values);
-        return rows;
-    },
+    const sql = `
+        UPDATE produtos
+        SET 
+            nome = ?, 
+            descricao = ?,
+            preco = ?, 
+            vinculoImagem = ?, 
+            idCategoria = ?, 
+            qtdEstoque = ?
+        WHERE id = ?;
+    `;
+
+    const values = [
+        produto.nome,
+        produto.descricao,
+        produto.preco,
+        produto.vinculoImagem,
+        produto.idCategoria,
+        produto.qtdEstoque,
+        produto.id
+    ];
+
+    const [result] = await connection.execute(sql, values);
+
+    return result;
+},
 
     deletar: async (idProduto) => {
-        const sql = 'DELETE FROM produtos WHERE IdProduto = ?;';
+        const sql = 'DELETE FROM produtos WHERE id = ?;';
         const [rows] = await connection.execute(sql, [idProduto]);
         return rows;
     }

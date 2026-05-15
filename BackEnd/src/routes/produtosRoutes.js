@@ -12,4 +12,8 @@ produtoRoutes.get('/:id', produtosController.selecionar);
 
 produtoRoutes.get('/estoque/:id', produtosController.selecionarEstoque);
 
+produtoRoutes.put('/:id', uploadImage, produtosController.editar);
+
+produtoRoutes.delete('/:id', produtosController.deletar);
+
 export default produtoRoutes;
