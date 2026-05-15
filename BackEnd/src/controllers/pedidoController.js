@@ -82,7 +82,41 @@ const pedidoController = {
                 errorMessage: error.message
             });
         }
-    }
+    },
+    adicionarItem: async (req, res) => {
+        try {
+            const pedidoId = Number(req.params.pedidoId);
+            const { idProduto, quantidade, valorItem } = req.body;
+ 
+            // valida via model já associando o idPedido
+            const item = ItensPedido.criarComPedido({
+                idProduto,
+                quantidade,
+                valorItem,
+                idPedido: pedidoId
+            });
+ 
+            const result = await pedidoRepository.adicionarItem({
+                idPedido: item.idPedido,
+                idProduto: item.idProduto,
+                quantidade: item.quantidade,
+                valorItem: item.valorItem
+            });
+ 
+            return res.status(201).json({
+                message: "Item adicionado ao pedido com sucesso",
+                novoSubTotal: result.novoSubTotal,
+                result: result.rowsItem
+            });
+ 
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "Ocorreu um erro no servidor",
+                errorMessage: error.message
+            });
+        }
+    },
 };
 
 export default pedidoController;

@@ -9,7 +9,7 @@ pedidoRouter.post("/", pedidoController.criar);
 pedidoRouter.put("/:pedidoId/status", pedidoController.atualizarStatus); 
 
 // rotas de  itens
-// pedidoRouter.post("/:pedidoId/itens", pedidoController.adicionarItem);           
+ pedidoRouter.post("/:pedidoId/itens", pedidoController.adicionarItem);           
 // pedidoRouter.put("/:pedidoId/itens/:itemId", pedidoController.editarItem);        
 // pedidoRouter.delete("/:pedidoId/itens/:itemId", pedidoController.excluirItem);
 
