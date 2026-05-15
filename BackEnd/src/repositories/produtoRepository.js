@@ -21,13 +21,26 @@ const produtoRepository = {
         return result;
     },
 
-    selecionar: async () => {
-        const sql = 'SELECT * FROM produtos;';
-        const [rows] = await connection.execute(sql);
-        return rows;
-    },
+selecionarTodos: async () => {
+    const sql = 'SELECT * FROM produtos;';
+    
+    const [rows] = await connection.execute(sql);
 
-    calcularEstoque: async (idProduto) => {
+    return rows;
+},
+
+selecionarPorId: async (idProduto) => {
+    const sql = `
+        SELECT *
+        FROM produtos
+        WHERE id = ?;
+    `;
+
+    const [rows] = await connection.execute(sql, [idProduto]);
+
+    return rows[0];
+},
+    selecionarEstoque: async (idProduto) => {
         const sql = `
         SELECT id, nome, qtdEstoque
         FROM produtos
