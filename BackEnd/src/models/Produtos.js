@@ -3,16 +3,16 @@ export class Produtos {
     #nome;
     #descricao;
     #preco;
-    #imagem;
+    #vinculoImagem;
     #qtdEstoque;
     #idCategoria;
 
-    constructor(pId, pNome, pDescricao, pPreco, pImagem, pQtdEstoque, pIdCategoria) {
+    constructor(pId, pNome, pDescricao, pPreco, pVinculoImagem, pQtdEstoque, pIdCategoria) {
         this.#id = pId;
         this.nome = pNome;
         this.descricao = pDescricao;
         this.preco = pPreco;
-        this.imagem = pImagem;
+        this.imagem = pVinculoImagem;
         this.qtdEstoque = pQtdEstoque;
         this.idCategoria = pIdCategoria;
     }
@@ -48,13 +48,13 @@ export class Produtos {
         this.#preco = value;
     }
 
-    get imagem() {
-        return this.#imagem;
+    get vinculoImagem() {
+        return this.#vinculoImagem;
     }
 
     set imagem(value) {
         this.#validarImagem(value);
-        this.#imagem = value;
+        this.#vinculoImagem = value;
     }
 
     get qtdEstoque() {
@@ -112,10 +112,26 @@ export class Produtos {
     }
 
     static criar(dados) {
-        return new Produtos(null, dados.nome, dados.descricao, dados.preco, dados.imagem, dados.qtdEstoque, dados.idCategoria);
+        return new Produtos(
+            null,
+            dados.nome,
+            dados.descricao,
+            dados.preco,
+            dados.vinculoImagem,
+            dados.qtdEstoque,
+            dados.idCategoria
+        );
     }
 
     static alterar(dados, id) {
-        return new Produtos(id, dados.nome, dados.descricao, dados.preco, dados.imagem, dados.qtdEstoque, dados.idCategoria);
+        return new Produtos(
+            id,
+            dados.nome,
+            dados.descricao,
+            dados.preco,
+            dados.vinculoImagem,
+            dados.qtdEstoque,
+            dados.idCategoria
+        );
     }
 }

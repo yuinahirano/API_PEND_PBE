@@ -4,7 +4,7 @@ const produtoRepository = {
     criar: async (produto) => {
         const sql = `
             INSERT INTO produtos
-            (Nome, Descricao, Preco, imagem, qtdEstoque, idCategoria)
+            (nome, descricao, preco, vinculoImagem, qtdEstoque, idCategoria)
             VALUES (?, ?, ?, ?, ?, ?);
         `;
 
@@ -12,13 +12,13 @@ const produtoRepository = {
             produto.nome,
             produto.descricao,
             produto.preco,
-            produto.imagem,
+            produto.vinculoImagem,
             produto.qtdEstoque,
             produto.idCategoria
         ];
 
-        const [rows] = await connection.execute(sql, values);
-        return rows;
+        const [result] = await connection.execute(sql, values);
+        return result;
     },
 
     selecionar: async () => {
@@ -46,7 +46,7 @@ const produtoRepository = {
         const values = [
             produto.nome,
             produto.preco,
-            produto.vinculoImagem,
+            produto.vinculoImg,
             produto.idCategoria,
             produto.qtdEstoque,
             produto.id
