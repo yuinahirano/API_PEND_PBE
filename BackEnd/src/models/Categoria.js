@@ -26,7 +26,6 @@ export class Categoria {
         this.#nome = value;
 
 
-
     }
     get descricao() {
         return this.#descricao;
