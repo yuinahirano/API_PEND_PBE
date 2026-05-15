@@ -36,7 +36,21 @@ const pedidoController = {
                 errorMessage: error.message
             });
         }
-    }
+    },
+
+
+    selecionar: async (req, res) => {
+        try {
+            const result = await pedidoRepository.selecionar();
+            return res.status(200).json(result);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "Ocorreu um erro no servidor",
+                errorMessage: error.message
+            });
+        }
+    },
 };
 
 export default pedidoController;
