@@ -129,21 +129,17 @@ const pedidoRepository = {
                 [itemId, idPedido]
             );
 
-            // se não encontrou o item, lança erro
             if (rowsDelete.affectedRows === 0) {
                 throw new Error('Item não encontrado para este pedido');
             }
 
-            // rcalcula o subtotal do pedido
             const [rowsSubTotal] = await conn.execute(
                 'SELECT SUM(Quantidade * ValorItem) AS total FROM itens_pedidos WHERE idPedido = ?;',
                 [idPedido]
             );
 
-            // se não houver itens, sum retorna null, então vira 0
             const novoSubTotal = rowsSubTotal[0].total || 0;
 
-            // atualiza o subtotal do pedido
             await conn.execute(
                 'UPDATE pedidos SET SubTotal = ? WHERE Id = ?;',
                 [novoSubTotal, idPedido]
