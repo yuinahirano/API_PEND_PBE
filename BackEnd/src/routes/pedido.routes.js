@@ -6,7 +6,7 @@ const pedidoRouter = Router();
 
 pedidoRouter.get("/", pedidoController.selecionar);              
 pedidoRouter.post("/", pedidoController.criar);                
-// pedidoRouter.put("/:pedidoId/status", pedidoController.atualizarStatus); 
+pedidoRouter.put("/:pedidoId/status", pedidoController.atualizarStatus); 
 
 // rotas de  itens
 // pedidoRouter.post("/:pedidoId/itens", pedidoController.adicionarItem);           

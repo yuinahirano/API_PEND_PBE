@@ -51,6 +51,38 @@ const pedidoController = {
             });
         }
     },
+
+    atualizarStatus: async (req, res) => {
+        try {
+            const pedidoId = Number(req.params.pedidoId);
+            const { status } = req.body;
+
+            const statusValidos = Object.values(statusPedido);
+            if (!statusValidos.includes(status)) {
+                return res.status(400).json({
+                    message: `Status inválido. Valores aceitos: ${statusValidos.join(', ')}`
+                });
+            }
+ 
+            const result = await pedidoRepository.atualizarStatus(pedidoId, status);
+ 
+            if (result.affectedRows === 0) {
+                return res.status(404).json({ message: "Pedido não encontrado" });
+            }
+ 
+            return res.status(200).json({
+                message: "Status do pedido atualizado com sucesso",
+                novoStatus: status
+            });
+ 
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "Ocorreu um erro no servidor",
+                errorMessage: error.message
+            });
+        }
+    }
 };
 
 export default pedidoController;
