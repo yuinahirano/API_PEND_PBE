@@ -1,6 +1,6 @@
 import { Categoria } from "../models/Categoria.js";
 import categoriaRepository from "../repositories/categoriaRepository.js";
-import connection from "../config/database.js"; 
+import { connection } from "../configs/Database.js";
 
 const categoriaController = {
 
