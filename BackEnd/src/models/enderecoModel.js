@@ -111,5 +111,18 @@ export class Endereco {
             throw new Error(`O campo ${campo} é obrigatório!`);
     }
 
+
+    //factory methods
+    static create(dados) {
+        console.log('gfdg: ',dados);
+        
+        return new Endereco(dados.logradouro, dados.numero, dados.complemento, dados.bairro, dados.cidade, dados.uf, dados.cep, null, null
+        );
+    }
+
+    static atualizar(dados, id) {
+        return new Endereco(dados.logradouro, dados.numero, dados.complemento, dados.bairro, dados.cidade, dados.uf, dados.cep,id, dados.idCliente
+        );
+    }
     
 }

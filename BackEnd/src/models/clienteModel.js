@@ -86,7 +86,7 @@ export class Cliente {
         return new Cliente(dados.nome, dados.cpf, dados.telefone, null)
     }
 
-    static alterar(dados){
+    static atualizar(dados){
         return new Cliente(dados.nome, dados.cpf, dados.telefone, dados.id,);
     }
 }
