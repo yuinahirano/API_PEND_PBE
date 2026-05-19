@@ -2,6 +2,7 @@ import { connection } from "../configs/Database.js";
 
 const produtoRepository = {
     criar: async (produto) => {
+
         const sql = `
             INSERT INTO produtos
             (nome, descricao, preco, vinculoImagem, qtdEstoque, idCategoria)
@@ -21,25 +22,25 @@ const produtoRepository = {
         return result;
     },
 
-selecionarTodos: async () => {
-    const sql = 'SELECT * FROM produtos;';
-    
-    const [rows] = await connection.execute(sql);
+    selecionarTodos: async () => {
+        const sql = 'SELECT * FROM produtos;';
 
-    return rows;
-},
+        const [rows] = await connection.execute(sql);
 
-selecionarPorId: async (idProduto) => {
-    const sql = `
+        return rows;
+    },
+
+    selecionarPorId: async (idProduto) => {
+        const sql = `
         SELECT *
         FROM produtos
         WHERE id = ?;
     `;
 
-    const [rows] = await connection.execute(sql, [idProduto]);
+        const [rows] = await connection.execute(sql, [idProduto]);
 
-    return rows[0];
-},
+        return rows[0];
+    },
     selecionarEstoque: async (idProduto) => {
         const sql = `
         SELECT id, nome, qtdEstoque
@@ -50,10 +51,16 @@ selecionarPorId: async (idProduto) => {
         return rows[0];
     },
 
-editar: async (produto) => {
-    console.log(produto.id);
+    editar: async (produto) => {
+        console.log(produto.nome,
+            produto.descricao,
+            produto.preco,
+            produto.vinculoImagem,
+            produto.qtdEstoque,
+            produto.idCategoria)
+        console.log(produto.id);
 
-    const sql = `
+        const sql = `
         UPDATE produtos
         SET 
             nome = ?, 
@@ -65,20 +72,20 @@ editar: async (produto) => {
         WHERE id = ?;
     `;
 
-    const values = [
-        produto.nome,
-        produto.descricao,
-        produto.preco,
-        produto.vinculoImagem,
-        produto.idCategoria,
-        produto.qtdEstoque,
-        produto.id
-    ];
+        const values = [
+            produto.nome,
+            produto.descricao,
+            produto.preco,
+            produto.vinculoImagem,
+            produto.idCategoria,
+            produto.qtdEstoque,
+            produto.id
+        ];
 
-    const [result] = await connection.execute(sql, values);
+        const [result] = await connection.execute(sql, values);
 
-    return result;
-},
+        return result;
+    },
 
     deletar: async (idProduto) => {
         const sql = 'DELETE FROM produtos WHERE id = ?;';
