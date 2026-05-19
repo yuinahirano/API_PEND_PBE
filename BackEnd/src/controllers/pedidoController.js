@@ -117,6 +117,35 @@ const pedidoController = {
             });
         }
     },
+
+    editarItem: async (req, res) => {
+        try {
+            const pedidoId = Number(req.params.pedidoId);
+            const itemId = Number(req.params.itemId);
+            const { quantidade } = req.body;
+ 
+            if (!quantidade || quantidade <= 0) {
+                return res.status(400).json({ message: "Informe uma quantidade válida (> 0)" });
+            }
+ 
+            const result = await pedidoRepository.editarItem(itemId, pedidoId, quantidade);
+ 
+            return res.status(200).json({
+                message: "Item atualizado com sucesso",
+                novoSubTotal: result.novoSubTotal
+            });
+ 
+        } catch (error) {
+            console.log(error);
+            const httpStatus = error.message.includes('não encontrado') ? 404 : 500;
+            return res.status(httpStatus).json({
+                message: error.message.includes('não encontrado')
+                    ? error.message
+                    : "Ocorreu um erro no servidor",
+                errorMessage: error.message
+            });
+        }
+    },
 };
 
 export default pedidoController;
