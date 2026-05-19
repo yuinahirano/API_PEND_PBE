@@ -2,6 +2,7 @@ import {Cliente} from '../models/clienteModel.js';
 import { Endereco } from '../models/enderecoModel.js';
 import { ValidarCpf } from '../utils/validarCpf.js';
 import axios from 'axios';
+import { clienteRepository } from '../repositories/clienteRepository.js';
 
 const clienteController = {
 
@@ -41,7 +42,6 @@ const clienteController = {
                 cliente: result
             });
 
-
         } catch (error) {
 
             console.log(error);
@@ -51,7 +51,19 @@ const clienteController = {
             });
 
         }
-    }
+    },
+
+    selecionar: async (req, res) => {
+        try {
+            const result = await clienteRepository.selecionar();
+            res.json(result)
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+
+    },
+
+    
 }
 
 export default clienteController
