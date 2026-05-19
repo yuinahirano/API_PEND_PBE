@@ -63,7 +63,57 @@ const clienteController = {
 
     },
 
-    
+    atualizar: async (req, res) => {
+        try {
+
+            let clienteId = Number(req.params.id)
+
+            let enderecoId = Number(req.query.endId)
+            let { nome, numero, complemento, cpf, cep } = req.body;
+
+            const cepRegex = /^[0-9]{8}$/; //valida se tem exatamente 8 digitos
+
+            if (!ValidarCpf(cpf))
+                return res.status(400).json({ message: "O CPF é inválido" });
+
+            if (!cepRegex.test(cep)) {
+                return res.status(400).json({
+                    message: 'O Cep é inválido'
+                });
+            }
+
+            const respAPI = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+
+            if (respAPI.data.erro) {
+                throw new Error('erro ao consultar o cep na API');
+            }
+
+
+            const logradouro = respAPI.data.logradouro;
+            const bairro = respAPI.data.bairro;
+            const cidade = respAPI.data.localidade;
+            const uf = respAPI.data.uf;
+
+            const cliente = Cliente.atualizar({ nome, cpf, clienteId });
+            const endereco = Endereco.atualizar({ logradouro, numero, complemento, bairro, cidade, uf, cep, endId });
+            const result = await clienteRepository.atualizar(cliente, endereco);
+
+            return res.status(201).json({
+                message: 'Cliente atualizado com sucesso',
+                cliente: result
+            });
+
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: 'Erro no servidor',
+                errorMessage: error.message
+            });
+        }
+
+    },
+
+
 }
 
 export default clienteController
