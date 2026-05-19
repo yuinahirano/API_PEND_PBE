@@ -3,7 +3,7 @@ import pedidoController from "../controllers/pedidoController.js";
 
 const pedidoRouter = Router();
 
-
+//rotas dw pedidos
 pedidoRouter.get("/", pedidoController.selecionar);              
 pedidoRouter.post("/", pedidoController.criar);                
 pedidoRouter.put("/:pedidoId/status", pedidoController.atualizarStatus); 
