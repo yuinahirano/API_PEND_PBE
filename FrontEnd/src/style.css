@@ -1,0 +1,94 @@
+:root {
+  --bs-primary: #740001;
+  --bs-primary-rgb: 116, 0, 1;
+  /* para alterar os textos também */
+  --bs-secondary: #D3A625;
+  --bs-success: #EEBA30;
+  /* pode usar como tertiary */
+}
+
+body {
+  font-family: 'Manrope', 'Inter', sans-serif;
+  background-color: #FAF9F8;
+}
+
+.personagem-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #FDFCFB;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+}
+
+.personagem-card:hover {
+  transform: translateY(-8px);
+}
+
+/* IMAGEM */
+.personagem-img {
+  height: 320px;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.personagem-card:hover .personagem-img {
+  transform: scale(1.05);
+}
+
+/* botão flutuante */
+.personagem-card .btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* casa */
+.personagem-card .text-warning {
+  color: #D3A625 !important;
+  letter-spacing: 1px;
+  font-size: 10px;
+}
+
+.material-symbols-outlined {
+  font-size: 20px;
+  transition: 0.2s;
+
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.favorito .material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 1;
+  color: #D3A625;
+}
+
+button:hover .material-symbols-outlined {
+  color: #D3A625;
+}
+
+.page-link {
+    background-color: #fff;
+    color: var(--bs-primary);
+    border: 1px solid #dee2e6;
+}
+
+.page-link:hover {
+    background-color: var(--bs-primary);
+    color: #fff;
+}
+
+.page-item.active .page-link {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: #fff;
+}
+
+.page-item.disabled .page-link {
+    cursor: not-allowed;
+}
