@@ -18,7 +18,6 @@ API REST desenvolvida em **Node.js + Express + MySQL**, responsável pelo gerenc
 - mysql2
 - Multer
 - Dotenv
-- ESModules
 
 ---
 
@@ -71,10 +70,11 @@ src/
 Crie um arquivo `.env`
 
 ```env
-DB_HOST=localhost
-DB_USER=root
+SERVER_PORT=8000
+DB_HOST=10.87.169.69
+DB_DATABASE=api_pend_pbe
+DB_USER=LABUBUS_USER
 DB_PASSWORD=
-DB_DATABASE=loja
 DB_PORT=3306
 ```
 
@@ -110,7 +110,7 @@ Responsável por:
 
 - Criar diretórios automaticamente
 - Gerar nomes únicos com hash
-- Validar tipo MIME
+- Validar tipo da imagem
 - Definir limite de tamanho
 
 Tipos permitidos:
@@ -169,7 +169,7 @@ Base:
 |--------|------|-----------|
 | POST | `/` | Criar categoria |
 | GET | `/` | Listar categorias |
-| GET | `/:id` | Buscar por ID |
+| GET | `/categorias/:id` | Buscar por ID |
 | PUT | `/:id` | Editar categoria |
 | DELETE | `/:id` | Remover categoria |
 
@@ -361,7 +361,7 @@ npm run dev
 Servidor:
 
 ```http
-http://localhost:3000
+http://localhost:8000
 ```
 
 ---
@@ -371,21 +371,6 @@ http://localhost:3000
 Ferramentas recomendadas:
 
 - Insomnia
-- Postman
-
-Headers:
-
-JSON:
-
-```http
-Content-Type: application/json
-```
-
-Upload:
-
-```http
-multipart/form-data
-```
 
 ---
 
@@ -394,9 +379,9 @@ multipart/form-data
 O projeto segue:
 
 - MVC
-- Repository Pattern
-- Singleton Pattern
-- Middleware Pattern
+- Repository 
+- Singleton 
+- Middleware 
 - Transaction Control
 - REST API Design
 
