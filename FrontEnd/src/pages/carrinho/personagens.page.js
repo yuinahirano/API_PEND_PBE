@@ -1,4 +1,4 @@
-import { buscarPersonagens } from '../../services/personagem/personagem.api';
+import { buscarPersonagens } from '../../services/produto/produto.api';
 import { pesquisarPersonagem } from '../../components/layout/navbar.component';
 import { criarPaginacao, renderizarPersonagens } from '../../components/ui/paginacao.component';
 import spinnerCarregamento from '../../components/ui/spinner-carregamento.component';
