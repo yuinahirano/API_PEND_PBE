@@ -1,10 +1,8 @@
 :root {
   --bs-primary: #740001;
   --bs-primary-rgb: 116, 0, 1;
-  /* para alterar os textos também */
   --bs-secondary: #D3A625;
   --bs-success: #EEBA30;
-  /* pode usar como tertiary */
 }
 
 body {
@@ -12,7 +10,7 @@ body {
   background-color: #FAF9F8;
 }
 
-.personagem-card {
+.produto-card {
   border-radius: 16px;
   overflow: hidden;
   background-color: #FDFCFB;
@@ -20,23 +18,21 @@ body {
   transition: all 0.3s ease;
 }
 
-.personagem-card:hover {
+.produto-card:hover {
   transform: translateY(-8px);
 }
 
-/* IMAGEM */
-.personagem-img {
+.produto-img {
   height: 320px;
   object-fit: cover;
   transition: transform 0.5s;
 }
 
-.personagem-card:hover .personagem-img {
+.produto-card:hover .produto-img {
   transform: scale(1.05);
 }
 
-/* botão flutuante */
-.personagem-card .btn {
+.produto-card .btn {
   width: 40px;
   height: 40px;
   display: flex;
@@ -44,8 +40,7 @@ body {
   justify-content: center;
 }
 
-/* casa */
-.personagem-card .text-warning {
+.produto-card .text-warning {
   color: #D3A625 !important;
   letter-spacing: 1px;
   font-size: 10px;
@@ -62,7 +57,7 @@ body {
     'opsz' 24;
 }
 
-.favorito .material-symbols-outlined {
+.carrinho .material-symbols-outlined {
   font-variation-settings:
     'FILL' 1;
   color: #D3A625;
@@ -73,22 +68,22 @@ button:hover .material-symbols-outlined {
 }
 
 .page-link {
-    background-color: #fff;
-    color: var(--bs-primary);
-    border: 1px solid #dee2e6;
+  background-color: #fff;
+  color: var(--bs-primary);
+  border: 1px solid #dee2e6;
 }
 
 .page-link:hover {
-    background-color: var(--bs-primary);
-    color: #fff;
+  background-color: var(--bs-primary);
+  color: #fff;
 }
 
 .page-item.active .page-link {
-    background-color: var(--bs-primary);
-    border-color: var(--bs-primary);
-    color: #fff;
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  color: #fff;
 }
 
 .page-item.disabled .page-link {
-    cursor: not-allowed;
+  cursor: not-allowed;
 }

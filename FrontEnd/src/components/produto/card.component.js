@@ -1,52 +1,43 @@
-import { criarBotaoFavorito } from './button.component';
-import criarImagemPersonagem from './imagem.component';
-import {
-  salvarFavorito,
-  removerFavorito,
-  ehFavorito
-} from '../../storage/personagem/favoritos.storage';
+import { estaCarrinho, removerCarrinho, salvarCarrinho } from "../../storage/produto/carrinho.storage";
+import { criarBotaoCarrinho } from "./button.component";
+import criarImagemPoduto from "./imagem.component";
+import criarPrecoProduto from "./preco.component";
 
-// Cria o card visual de um personagem.
-// `onFavoritoAlterado` é opcional: quem cria o card decide se quer reagir ao clique.
-export default function criarCardPersonagem(personagem, onFavoritoAlterado) {
-  let favorito = ehFavorito(personagem);
+export default function criarCardProduto(produto, onFavoritoAlterado) {
+  let carrinho = estaCarrinho(produto);
 
   const card = document.createElement('div');
-  card.className = 'card personagem-card border-0';
+  card.className = 'card produto-card border-0';
 
-  if (favorito) {
-    card.classList.add('favorito');
+  if (carrinho) {
+    card.classList.add('carrinho');
   }
 
   const imageContainer = document.createElement('div');
   imageContainer.className = 'position-relative overflow-hidden';
 
-  const imagem = criarImagemPersonagem(personagem);
-  imagem.classList.add('card-img-top', 'personagem-img');
+  const imagem = criarImagemPoduto(produto);
+  imagem.classList.add('card-img-top', 'produto-img');
 
   const btnContainer = document.createElement('div');
   btnContainer.className = 'position-absolute top-0 end-0 m-2';
 
-  const button  = criarBotaoFavorito(favorito);
+  const button = criarBotaoCarrinho(carrinho);
   button.addEventListener('click', () => {
-    // 1) Inverte o estado local do card.
-    favorito = !favorito;
+    carrinho = !carrinho;
 
-    // 2) Reflete visualmente (borda/estilo de favorito).
-    card.classList.toggle('favorito', favorito);
+    card.classList.toggle('carrinho', carrinho);
 
-    // 3) Persiste no localStorage.
-    if (favorito) {
-      salvarFavorito(personagem);
+    if (carrinho) {
+      salvarCarrinho(produto);
     } else {
-      removerFavorito(personagem);
+      removerCarrinho(produto);
     }
 
-    // 4) Notifica quem criou o card.
     if (typeof onFavoritoAlterado === 'function') {
       onFavoritoAlterado({
-        personagem,
-        favorito
+        produto,
+        carrinho
       });
     }
   });
@@ -57,15 +48,17 @@ export default function criarCardPersonagem(personagem, onFavoritoAlterado) {
   const cardBody = document.createElement('div');
   cardBody.className = 'card-body';
 
-  const casa = document.createElement('span');
-  casa.className = 'text-uppercase small fw-bold text-warning';
-  casa.innerText = personagem.house || 'Desconhecida';
-
   const nome = document.createElement('h5');
   nome.className = 'card-title fw-bold mt-1 mb-2';
-  nome.innerText = personagem.name;
+  nome.innerText = produto.nome;
 
-  cardBody.append(casa, nome);
+  const preco = criarPrecoProduto(produto);
+
+  const estoque = document.createElement('p');
+  estoque.className = 'card-text text-start text-muted small';
+  estoque.textContent = `Estoque: ${parseInt(produto.qtdEstoque)}`;
+
+  cardBody.append(nome, preco, estoque);
 
   card.append(imageContainer, cardBody);
 

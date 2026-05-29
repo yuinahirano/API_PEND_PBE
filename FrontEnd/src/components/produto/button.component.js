@@ -1,5 +1,5 @@
-// Cria o botão para adicionar aos favoritos
-export function criarBotaoFavorito(favorito = false) {
+// Cria o botão para adicionar ao carrinho
+export function criarBotaoCarrinho(carrinho = false) {
   const button = document.createElement('button');
 
   button.className = `
@@ -16,14 +16,14 @@ export function criarBotaoFavorito(favorito = false) {
   icon.className = 'material-symbols-outlined';
 
   // estado inicial
-  icon.innerText = 'favorite';
+  icon.innerText = carrinho ? 'remove_shopping_cart' : 'add_shopping_cart';
 
   button.appendChild(icon);
 
-  return button ;
+  return button;
 }
 
-// Cria o botão para remover dos favoritos
+// Cria o botão para remover do carrinho
 export function buttonRemover() {
   const buttonRemover = document.createElement('button');
   buttonRemover.className = 'btn btn-sm btn-outline-danger';

@@ -5,9 +5,8 @@ export default function criarNavbar() {
 
   nav.innerHTML = `
     <div class="container-fluid">
-
       <a class="navbar-brand fw-bold" href="#">
-        Harry Potter Explorer
+        Labubu's Store
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
@@ -20,7 +19,7 @@ export default function criarNavbar() {
             <button class="nav-link fw-bold text-primary active" id="btnHome">Home</button>
           </li>
           <li class="nav-item">
-            <button class="nav-link" id="btnFavoritos">Favoritos</button>
+            <button class="nav-link" id="btnCarrinho">Carrinho</button>
           </li>
         </ul>
       </div>
@@ -28,12 +27,10 @@ export default function criarNavbar() {
       <form class="d-flex">
         <input class="form-control" type="search" placeholder="Pesquisar" id="inputSearch">
       </form>
-
     </div>
   `;
 
   header.appendChild(nav);
-
 }
 
 export function ativarMenu(botaoClicado) {
@@ -44,16 +41,13 @@ export function ativarMenu(botaoClicado) {
   botaoClicado.classList.add('active', 'text-primary', 'fw-bold');
 }
 
-export function pesquisarPersonagem(personagens, onSearch) {
-
-  const inputSearch = document.querySelector("#inputSearch");
+export function pesquisarProduto(produtos, onSearch) {
+  const inputSearch = document.querySelector('#inputSearch');
 
   inputSearch.addEventListener('input', () => {
-
     const termo = inputSearch.value.toLowerCase();
-
-    const filtrados = personagens.filter(personagem =>
-      personagem.name.toLowerCase().includes(termo)
+    const filtrados = produtos.filter(produto =>
+      produto.nome.toLowerCase().includes(termo)
     );
 
     onSearch(filtrados);
