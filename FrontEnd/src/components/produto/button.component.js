@@ -39,7 +39,7 @@ export function botaoAddQuantidade() {
   buttonAdd.className = `
         btn p-0 border-0 rounded-circle
         d-flex align-items-center justify-content-center
-        bg-primary m-3
+        bg-primary m-0
     `;
 
   buttonAdd.style.width = '50px';
@@ -47,7 +47,6 @@ export function botaoAddQuantidade() {
 
   const icon = document.createElement('span');
   icon.innerText = "+";
-  icon.className = 'text-white';
 
   buttonAdd.appendChild(icon);
 
@@ -58,9 +57,9 @@ export function botaoDelQuantidade() {
   const buttonDel = document.createElement('button');
 
   buttonDel.className = `
-        btn p-0 border-0 rounded-circle
+        btn p-0 border-0
         d-flex align-items-center justify-content-center
-        bg-primary m-3
+        bg-primary m-0
     `;
 
   buttonDel.style.width = '50px';
@@ -68,7 +67,7 @@ export function botaoDelQuantidade() {
 
   const icon = document.createElement('span');
   icon.innerText = "-";
-  icon.className = 'text-white';
+
 
 
   buttonDel.appendChild(icon);

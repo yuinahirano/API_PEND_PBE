@@ -84,7 +84,7 @@ export function criarBotaoQuantidade(produto) {
   const inputQuantidade = document.createElement('input');
   // inputQuantidade.type = 'number';
   inputQuantidade.value = 0;
-  inputQuantidade.className = 'form-control m-0 w-25 text-center';
+  inputQuantidade.className = 'form-control m-0 w-50 text-center';
 
   //verifica o valor de quantidade se ja tem algum valor
   const chaveStorage = `qtd_produto_${produto.id}`;
