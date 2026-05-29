@@ -21,6 +21,9 @@ export default function criarNavbar() {
           <li class="nav-item">
             <button class="nav-link" id="btnCarrinho">Carrinho</button>
           </li>
+            <li class="nav-item">
+            <button class="nav-link" id="btnPedidos">Pedidos</button>
+          </li>
         </ul>
       </div>
 
