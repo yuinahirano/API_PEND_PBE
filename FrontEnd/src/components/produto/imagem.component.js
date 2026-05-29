@@ -1,17 +1,23 @@
-/**
- * Cria a imagem do personagem
- */
-export default function criarImagemPersonagem(personagem) {
+export default function criarImagemProduto(produto) {
   const img = document.createElement('img');
-  img.alt = personagem.name;
+
+  img.alt = produto.nome;
   img.className = 'card-img-top img-fluid';
-
   img.style.height = '360px';
-  img.style.objectFit = personagem.image ? 'cover' : '';
 
-  img.src = personagem.image
-    ? personagem.image
-    : 'public/default-character.png';
+  if (produto.vinculoImagem) {
+    img.style.objectFit = 'cover';
+    img.src = encodeURI(`http://localhost:8000${produto.vinculoImagem}`);
+
+    // Fallback se a imagem não carregar
+    img.onerror = () => {
+      console.warn(`Imagem não encontrada: ${img.src}`);
+      img.src = '/default-character.png';
+      img.style.objectFit = '';
+    };
+  } else {
+    img.src = '/default-character.png';
+  }
 
   return img;
 }
