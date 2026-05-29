@@ -213,6 +213,30 @@ const pedidoController = {
                 errorMessage: error.message
             });
         }
+    },
+    // remove um pedido e todos os seus itens
+    excluirPedido: async (req, res) => {
+        try {
+            const pedidoId = Number(req.params.pedidoId);
+
+            const result = await pedidoRepository.excluirPedido(pedidoId);
+
+            return res.status(200).json({
+                message: "Pedido excluído com sucesso", result
+            });
+
+        } catch (error) {
+            console.log(error);
+
+            // Verifica se a mensagem do erro contém "não encontrado"
+            // Se conter, define como 404(não foi encontrada), se não, define como 500(erro no servidor)
+            const httpStatus = error.message.includes('não encontrado') ? 404 : 500;
+
+            // Se for erro de "não encontrado", mostra a mensagem real, caso contrário, mostra uma mensagem comum de erro
+            return res.status(httpStatus).json({
+                message: error.message.includes('não encontrado') ? error.message : "Ocorreu um erro no servidor", errorMessage: error.message
+            });
+        }
     }
 };
 

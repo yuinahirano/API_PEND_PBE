@@ -1,30 +1,26 @@
 import { ITENS_POR_PAGINA, MAX_BOTOES } from '../../config/app.config';
+import criarCardProduto, { criarBotaoQuantidade } from '../produto/card.component';
 import criarColuna from '../shared/coluna-bootstrap.component';
-import criarCardPersonagem from '../personagem/card.component';
 
-export function renderizarPersonagens(
+export function renderizarProdutos(
     row,
-    personagens,
+    produtos,
     paginaAtual,
-    // `opcoes` agrupa parâmetros opcionais para não "explodir" a assinatura.
-    // Assim, podemos adicionar novos comportamentos sem quebrar chamadas antigas.
     opcoes = {},
     itensPorPagina = ITENS_POR_PAGINA
 ) {
     row.innerHTML = '';
-    // Desestruturação:
-    // se `opcoes` tiver `onFavoritoAlterado`, guardamos em variável.
-    // se não tiver, o valor fica `undefined` e nada extra acontece.
     const { onFavoritoAlterado } = opcoes;
 
     const inicio = (paginaAtual - 1) * itensPorPagina;
     const fim = inicio + itensPorPagina;
 
-    const personagensPaginados = personagens.slice(inicio, fim);
+    const produtosPaginados = produtos.slice(inicio, fim);
 
-    personagensPaginados.forEach(personagem => {
+    produtosPaginados.forEach(produto => {
         const coluna = criarColuna();
-        const card = criarCardPersonagem(personagem, onFavoritoAlterado);
+        const card = criarCardProduto(produto, onFavoritoAlterado);
+        const cardQuantidade = criarBotaoQuantidade(produto);
 
         coluna.appendChild(card);
         row.appendChild(coluna);
@@ -41,16 +37,13 @@ export function criarPaginacao({
     
     if (totalItens > 0) {
         const totalPaginas = Math.ceil(totalItens / itensPorPagina);
-
         const ul = document.createElement('ul');
 
         ul.className = 'pagination justify-content-center mt-4 flex-wrap';
         nav.appendChild(ul);
 
-        // ANTERIOR
         ul.appendChild(criarAnterior(paginaAtual, onPageChange));
 
-        // cálculo intervalo
         let inicio = Math.max(1, paginaAtual - Math.floor(MAX_BOTOES / 2));
         let fim = inicio + MAX_BOTOES - 1;
 
@@ -59,7 +52,6 @@ export function criarPaginacao({
             inicio = Math.max(1, fim - MAX_BOTOES + 1);
         }
 
-        // primeira página + ...
         if (inicio > 1) {
             ul.appendChild(criarItem(1, paginaAtual, onPageChange));
 
@@ -68,12 +60,10 @@ export function criarPaginacao({
             }
         }
 
-        // páginas visíveis
         for (let i = inicio; i <= fim; i++) {
             ul.appendChild(criarItem(i, paginaAtual, onPageChange));
         }
 
-        // última página + ...
         if (fim < totalPaginas) {
             if (fim < totalPaginas - 1) {
                 ul.appendChild(criarEllipsis());
@@ -82,9 +72,7 @@ export function criarPaginacao({
             ul.appendChild(criarItem(totalPaginas, paginaAtual, onPageChange));
         }
 
-        // PRÓXIMO
         ul.appendChild(criarProximo(paginaAtual, totalPaginas, onPageChange));
-
     }
 
     return nav;
@@ -151,4 +139,3 @@ function criarEllipsis() {
     li.appendChild(span);
     return li;
 }
-
