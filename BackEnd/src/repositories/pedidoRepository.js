@@ -154,7 +154,31 @@ const pedidoRepository = {
         } finally {
             conn.release();
         }
+    },
+    excluirPedido: async (idPedido) => {
+    const conn = await connection.getConnection();
+    try {
+        await conn.beginTransaction();
+
+        const [rowsItens] = await conn.execute(
+            'DELETE FROM itens_pedidos WHERE idPedido = ?;',
+            [idPedido]
+        );
+
+        const [rowsPedido] = await conn.execute(
+            'DELETE FROM pedidos WHERE Id = ?;',
+            [idPedido]
+        );
+
+        await conn.commit();
+        return { rowsItens, rowsPedido };
+    } catch (error) {
+        await conn.rollback();
+        throw error;
+    } finally {
+        conn.release();
     }
+},
 };
 
 export default pedidoRepository;
