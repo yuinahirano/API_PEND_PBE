@@ -3,9 +3,9 @@ export function criarBotaoCarrinho(carrinho = false) {
   const button = document.createElement('button');
 
   button.className = `
-    btn p-0 border-0 rounded-circle
+    btn p-0 border-0 rounded-30
     d-flex align-items-center justify-content-center
-    bg-light bg-opacity-75
+    bg-secondary w-75
   `;
 
   button.style.width = '40px';
@@ -30,4 +30,48 @@ export function buttonRemover() {
   buttonRemover.innerText = '🗑️';
 
   return buttonRemover;
+}
+
+//cria botão que controla a quantidade de itens para o carrinho
+export function botaoAddQuantidade() {
+  const buttonAdd = document.createElement('button');
+
+  buttonAdd.className = `
+        btn p-0 border-0 rounded-circle
+        d-flex align-items-center justify-content-center
+        bg-primary m-3
+    `;
+
+  buttonAdd.style.width = '50px';
+  buttonAdd.style.height = '50px';
+
+  const icon = document.createElement('span');
+  icon.innerText = "+";
+  icon.className = 'text-white';
+
+  buttonAdd.appendChild(icon);
+
+  return buttonAdd;
+}
+
+export function botaoDelQuantidade() {
+  const buttonDel = document.createElement('button');
+
+  buttonDel.className = `
+        btn p-0 border-0 rounded-circle
+        d-flex align-items-center justify-content-center
+        bg-primary m-3
+    `;
+
+  buttonDel.style.width = '50px';
+  buttonDel.style.height = '50px';
+
+  const icon = document.createElement('span');
+  icon.innerText = "-";
+  icon.className = 'text-white';
+
+
+  buttonDel.appendChild(icon);
+
+  return buttonDel;
 }

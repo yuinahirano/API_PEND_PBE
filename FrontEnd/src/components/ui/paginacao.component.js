@@ -1,5 +1,5 @@
 import { ITENS_POR_PAGINA, MAX_BOTOES } from '../../config/app.config';
-import criarCardProduto from '../produto/card.component';
+import criarCardProduto, { criarBotaoQuantidade } from '../produto/card.component';
 import criarColuna from '../shared/coluna-bootstrap.component';
 
 export function renderizarProdutos(
@@ -20,6 +20,7 @@ export function renderizarProdutos(
     produtosPaginados.forEach(produto => {
         const coluna = criarColuna();
         const card = criarCardProduto(produto, onFavoritoAlterado);
+        const cardQuantidade = criarBotaoQuantidade(produto);
 
         coluna.appendChild(card);
         row.appendChild(coluna);
