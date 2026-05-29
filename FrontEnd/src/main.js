@@ -1,20 +1,19 @@
 import criarNavbar, { ativarMenu } from './components/layout/navbar.component';
-import { personagensPage } from './pages/personagem/personagens.page';
-import { personagensFavoritosPage } from './pages/personagem/favoritos.page';
+import { produtosPage } from './pages/produtos/personagens.page';
+import { produtosCarrinhoPage } from './pages/produtos/carrinho.page'; 
 
 criarNavbar();
-personagensPage();
+produtosPage(); 
 
 const btnHome = document.querySelector('#btnHome');
-const btnFavoritos = document.querySelector('#btnFavoritos');
+const btnCarrinho = document.querySelector('#btnCarrinho');
 
-// Controla a navegação entre páginas da aplicação
 btnHome.addEventListener('click', () => {
   ativarMenu(btnHome);
-  personagensPage();
+  produtosPage();
 });
 
-btnFavoritos.addEventListener('click', () => {
-  ativarMenu(btnFavoritos);
-  personagensFavoritosPage();
+btnCarrinho.addEventListener('click', () => {
+  ativarMenu(btnCarrinho);
+  produtosCarrinhoPage();
 });
