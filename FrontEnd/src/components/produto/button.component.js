@@ -47,7 +47,7 @@ export function botaoAddQuantidade() {
 
   const icon = document.createElement('span');
   icon.innerText = "+";
-  icon.className = 'text-white';
+  icon.className = 'text-black';
 
   buttonAdd.appendChild(icon);
 
@@ -68,7 +68,7 @@ export function botaoDelQuantidade() {
 
   const icon = document.createElement('span');
   icon.innerText = "-";
-  icon.className = 'text-white';
+  icon.className = 'text-black';
 
 
   buttonDel.appendChild(icon);

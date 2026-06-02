@@ -2,7 +2,7 @@ import { criarPaginacao, renderizarProdutos } from '../../components/ui/paginaca
 import spinnerCarregamento from '../../components/ui/spinner-carregamento.component';
 import { ITENS_POR_PAGINA } from '../../config/app.config';
 import { listarCarrinho, listarIdsCarrinho } from '../../storage/produto/carrinho.storage';
-import { criarPedido } from '../../services/produto/pedido.api';
+import { criarPedido } from '../../services/produto/pedidos.api';
 
 export async function produtosCarrinhoPage() {
   const app = document.querySelector('#app');

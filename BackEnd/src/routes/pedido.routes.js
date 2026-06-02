@@ -12,5 +12,5 @@ pedidoRouter.put("/:pedidoId/status", pedidoController.atualizarStatus);
 pedidoRouter.post("/:pedidoId/itens", pedidoController.adicionarItem);           
 pedidoRouter.put("/:pedidoId/itens/:itemId", pedidoController.editarItem);        
 pedidoRouter.delete("/:pedidoId/itens/:itemId", pedidoController.excluirItem);
-
+pedidoRouter.delete("/:pedidoId", pedidoController.excluirPedido);
 export default pedidoRouter;

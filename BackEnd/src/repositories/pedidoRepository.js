@@ -154,6 +154,41 @@ const pedidoRepository = {
         } finally {
             conn.release();
         }
+    },
+    excluirPedido: async (idPedido) => {
+
+        const conn = await connection.getConnection();
+
+        try {
+
+            await conn.beginTransaction();
+
+            //Apaga todos os itens que pertencem ao pedido do determinado idPedido
+            await conn.execute(
+                `DELETE FROM itens_pedidos WHERE idPedido = ?;`,
+                [idPedido]
+            );
+
+            //Apaga pedido tabela pedidos
+            const sql = `DELETE FROM pedidos WHERE Id = ?;`;
+
+            //Primeiro remove todos os itens do pedido e depois remove o pedido em si.
+            const [result] = await conn.execute(sql, [idPedido]);
+
+            await conn.commit();
+
+            return result;
+
+        } catch (error) {
+
+            await conn.rollback();
+            throw error;
+
+        } finally {
+
+            conn.release();
+
+        }
     }
 };
 

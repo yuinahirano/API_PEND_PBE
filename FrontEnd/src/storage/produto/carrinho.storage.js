@@ -1,25 +1,36 @@
-// Salva um personagem na lista de carrinho
+// Salva um produto na lista de carrinho
 export function salvarCarrinho(produto) {
   const carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
 
-  const jaExiste = carrinho.some(item => item.id === produto.id);
+  const index = carrinho.findIndex(item => item.id === produto.id);
 
-  if (!jaExiste) {
-    carrinho.push(produto);
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+  if (index !== -1) {
+    carrinho[index].quantidade = (carrinho[index].quantidade ?? 1) + 1;
+  } else {
+    carrinho.push({ ...produto, quantidade: 1 });
   }
+
+  localStorage.setItem('carrinho', JSON.stringify(carrinho));
 }
 
-// Remove um produto do carrinho pelo id
+// Remove uma unidade do produto, ou remove o produto se quantidade for 1
 export function removerCarrinho(produto) {
-  const carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
+  let carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
 
-  const carrinhoAtualizado = carrinho.filter(item => item.id !== produto.id);
+  const index = carrinho.findIndex(item => item.id === produto.id);
 
-  localStorage.setItem('carrinho', JSON.stringify(carrinhoAtualizado));
+  if (index !== -1) {
+    if (carrinho[index].quantidade > 1) {
+      carrinho[index].quantidade -= 1;
+    } else {
+      carrinho = carrinho.filter(item => item.id !== produto.id);
+    }
+  }
+
+  localStorage.setItem('carrinho', JSON.stringify(carrinho));
 }
 
-// Retorna todos os personagens salvos no carrinho
+// Retorna todos os produtos salvos no carrinho
 export function listarCarrinho() {
   return JSON.parse(localStorage.getItem('carrinho') || '[]');
 }
@@ -27,11 +38,10 @@ export function listarCarrinho() {
 // Verifica se um produto já está no carrinho
 export function estaCarrinho(produto) {
   const carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
-
   return carrinho.some(item => item.id === produto.id);
 }
 
 export function listarIdsCarrinho() {
-   const carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
+  const carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
   return carrinho.map(item => item.id);
 }

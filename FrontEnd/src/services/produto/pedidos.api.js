@@ -1,33 +1,45 @@
-import axios from 'axios';
+  import axios from 'axios';
 
-const API_URL = 'http://localhost:8000/pedidos';
+  const API_URL = 'http://localhost:8000/pedidos';
 
-export async function buscarPedidos() {
-  try {
-    const resposta = await axios.get(API_URL);
-    return resposta.data;
-  } catch (erro) {
-    console.error('Erro ao buscar pedidos', erro);
-    return [];
+  export async function buscarPedidos() {
+    try {
+      const resposta = await axios.get(API_URL);
+      return resposta.data;
+    } catch (erro) {
+      console.error('Erro ao buscar pedidos', erro);
+      return [];
+    }
   }
-}
 
-export async function atualizarStatusPedido(idPedido, status) {
-  try {
-    const resposta = await axios.put(`${API_URL}/${idPedido}/status`, { status });
-    return resposta.data;
-  } catch (erro) {
-    console.error('Erro ao atualizar status do pedido', erro);
-    return null;
+  export async function atualizarStatusPedido(idPedido, status) {
+    try {
+      const resposta = await axios.put(`${API_URL}/${idPedido}/status`, { status });
+      return resposta.data;
+    } catch (erro) {
+      console.error('Erro ao atualizar status do pedido', erro);
+      return null;
+    }
   }
-}
 
-export async function deletarPedido(idPedido) {
+  export async function deletarPedido(idPedido) {
+    try {
+      const resposta = await axios.delete(`${API_URL}/${idPedido}`);
+      return resposta.data;
+    } catch (erro) {
+      console.error('Erro ao deletar pedido', erro);
+      return null;
+    }
+  }
+
+  export async function criarPedido(idCliente, itens) {
+      console.log('itens enviados:', JSON.stringify(itens));
   try {
-    const resposta = await axios.delete(`${API_URL}/${idPedido}`);
-    return resposta.data;
+    const resposta = await axios.post(API_URL, { idCliente, itens });
+    console.log('resposta.data:', resposta.data);
+    return resposta.data.rowsPedido;
   } catch (erro) {
-    console.error('Erro ao deletar pedido', erro);
+    console.error('Erro ao criar pedido', erro);
     return null;
   }
 }
