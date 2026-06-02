@@ -2,30 +2,37 @@ import { connection } from "../configs/Database.js";
 
 const pedidoRepository = {
 
-    criar: async (pedido, itens) => {
-        const conn = await connection.getConnection();
-        try {
-            await conn.beginTransaction();
+criar: async (pedido, itens) => {
+    const conn = await connection.getConnection();
+    try {
+        await conn.beginTransaction();
 
-            const sqlPedido = 'INSERT INTO pedidos (idCliente, SubTotal, Status) VALUES (?, ?, ?);';
-            const valuesPedido = [pedido.idCliente, pedido.subTotal, pedido.status];
-            const [rowsPedido] = await conn.execute(sqlPedido, valuesPedido);
+        const sqlPedido = 'INSERT INTO pedidos (idCliente, SubTotal, Status) VALUES (?, ?, ?);';
+        const valuesPedido = [pedido.idCliente, pedido.subTotal, pedido.status];
+        const [rowsPedido] = await conn.execute(sqlPedido, valuesPedido);
 
-            for (const item of itens) {
-                const sqlItens = 'INSERT INTO itens_pedidos (idPedido, idProduto, Quantidade, ValorItem) VALUES (?, ?, ?, ?);';
-                const valuesItens = [rowsPedido.insertId, item.idProduto, item.quantidade, item.valorItem];
-                await conn.execute(sqlItens, valuesItens);
+        for (const item of itens) {
+            const sqlItens = 'INSERT INTO itens_pedidos (idPedido, idProduto, Quantidade, ValorItem) VALUES (?, ?, ?, ?);';
+            const valuesItens = [rowsPedido.insertId, item.idProduto, item.quantidade, item.valorItem];
+            await conn.execute(sqlItens, valuesItens);
+
+            const sqlEstoque = 'UPDATE produtos SET qtdEstoque = qtdEstoque - ? WHERE id = ? AND qtdEstoque >= ?;';
+            const [rowsEstoque] = await conn.execute(sqlEstoque, [item.quantidade, item.idProduto, item.quantidade]);
+
+            if (rowsEstoque.affectedRows === 0) {
+                throw new Error(`Estoque insuficiente para o produto ${item.idProduto}`);
             }
-
-            await conn.commit();
-            return { rowsPedido };
-        } catch (error) {
-            await conn.rollback();
-            throw error;
-        } finally {
-            conn.release();
         }
-    },
+
+        await conn.commit();
+        return { rowsPedido };
+    } catch (error) {
+        await conn.rollback();
+        throw error;
+    } finally {
+        conn.release();
+    }
+},
 
     atualizarStatus: async (idPedido, novoStatus) => {
         const sql = 'UPDATE pedidos SET Status = ? WHERE Id = ?;';

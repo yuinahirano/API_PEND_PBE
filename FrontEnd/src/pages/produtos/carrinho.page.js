@@ -1,7 +1,7 @@
 import { criarPaginacao, renderizarProdutos } from '../../components/ui/paginacao.component';
 import spinnerCarregamento from '../../components/ui/spinner-carregamento.component';
 import { ITENS_POR_PAGINA } from '../../config/app.config';
-import { listarCarrinho, listarIdsCarrinho } from '../../storage/produto/carrinho.storage';
+import { listarCarrinho } from '../../storage/produto/carrinho.storage';
 import { criarPedido } from '../../services/produto/pedidos.api';
 
 export async function produtosCarrinhoPage() {
@@ -10,17 +10,17 @@ export async function produtosCarrinhoPage() {
   let paginaAtual = 1;
   let carrinho = [];
   let carrinhoFiltrados = [];
-  
+
   app.innerHTML = `
     <h1 class="fw-bold text-primary">🛒 Carrinho</h1>
     ${spinnerCarregamento()}
     <div class="row mt-4 d-none" id="listaProdutos"></div>
     <div class="mt-4">
-    <button id="btnCriarPedido" class="btn btn-success">
-    🛒 Criar Pedido
-    </button>
-    <div id="pedidoMensagem" class="mt-2"></div>
-    <div id="paginacao"></div>
+      <button id="btnCriarPedido" class="btn btn-success">
+        🛒 Criar Pedido
+      </button>
+      <div id="pedidoMensagem" class="mt-2"></div>
+      <div id="paginacao"></div>
     </div>
   `;
 
@@ -52,36 +52,38 @@ export async function produtosCarrinhoPage() {
     paginaAtual = Math.min(paginaAtual, totalPaginas);
   }
 
-btnCriarPedido.addEventListener('click', async () => {
-  const carrinhAtual = listarCarrinho();
+  btnCriarPedido.addEventListener('click', async () => {
+    const carrinhoAtual = listarCarrinho();
 
-  if (carrinhAtual.length === 0) {
-    pedidoMensagem.innerHTML = '<span class="text-danger">❌ Carrinho vazio.</span>';
-    return;
-  }
+    if (carrinhoAtual.length === 0) {
+      pedidoMensagem.innerHTML = '<span class="text-danger">❌ Carrinho vazio.</span>';
+      return;
+    }
 
-  // Monta os itens no formato que o backend espera
-  const itens = carrinhAtual.map(produto => ({
-    idProduto: produto.id,
-    quantidade: produto.quantidade ?? 1,
-    valorItem: produto.preco,
-  }));
+    const itens = carrinhoAtual.map(produto => {
+      const quantidade = parseInt(localStorage.getItem(`qtd_produto_${produto.id}`)) || 1;
+      return {
+        idProduto: produto.id,
+        quantidade,
+        valorItem: produto.preco,
+      };
+    });
 
-  const idCliente = 1; 
+    const idCliente = 1;
 
-  btnCriarPedido.disabled = true;
-  pedidoMensagem.innerHTML = '<span class="text-muted">Criando pedido...</span>';
+    btnCriarPedido.disabled = true;
+    pedidoMensagem.innerHTML = '<span class="text-muted">Criando pedido...</span>';
 
-  try {
-    const resultado = await criarPedido(idCliente, itens);
-    if (!resultado) throw new Error('Erro ao criar pedido.');
-    pedidoMensagem.innerHTML = `<span class="text-success">✅ Pedido criado com sucesso!</span>`;
-  } catch (erro) {
-    pedidoMensagem.innerHTML = `<span class="text-danger">❌ ${erro.message}</span>`;
-  } finally {
-    btnCriarPedido.disabled = false;
-  }
-});
+    try {
+      const resultado = await criarPedido(idCliente, itens);
+      if (!resultado) throw new Error('Erro ao criar pedido.');
+      pedidoMensagem.innerHTML = `<span class="text-success">✅ Pedido criado com sucesso!</span>`;
+    } catch (erro) {
+      pedidoMensagem.innerHTML = `<span class="text-danger">❌ ${erro.message}</span>`;
+    } finally {
+      btnCriarPedido.disabled = false;
+    }
+  });
 
   function atualizarTela() {
     renderizarProdutos(row, carrinhoFiltrados, paginaAtual, {
